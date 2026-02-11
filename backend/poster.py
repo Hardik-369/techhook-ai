@@ -76,6 +76,7 @@ def post_to_linkedin(post_content, image_path, session_path="backend/data/sessio
             print("Post button clicked (simulated for now).")
             
             # Save storage state for next time
+            os.makedirs(os.path.dirname(session_path), exist_ok=True)
             context.storage_state(path=session_path)
             
             browser.close()

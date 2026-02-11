@@ -31,8 +31,12 @@ jobs:
 
       - name: Commit Processed IDs
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "codewave08@gmail.com"
+          git config --local user.name "Hardik-369"
           git add backend/data/store.json
-          git commit -m "Update processed videos [skip ci]" || echo "No changes to commit"
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update processed videos [skip ci]"
+            git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
+          fi
