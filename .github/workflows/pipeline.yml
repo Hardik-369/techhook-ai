@@ -3,6 +3,9 @@ name: TechHook AI Pipeline
 on:
   schedule:
     - cron: '*/5 * * * *' # Every 5 minutes
+  push:
+    branches:
+      - main
   workflow_dispatch: # Allow manual trigger
 
 jobs:
