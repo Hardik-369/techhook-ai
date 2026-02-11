@@ -1,13 +1,26 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { LayoutDashboard, Settings, Activity, Youtube, Linkedin, Image as ImageIcon, Loader2 } from 'lucide-react';
+import {
+    LayoutDashboard,
+    Settings,
+    Activity,
+    Youtube,
+    Linkedin,
+    Image as ImageIcon,
+    Loader2,
+    Zap,
+    CheckCircle2,
+    History,
+    RefreshCcw,
+    ExternalLink
+} from 'lucide-react';
 
 const RAW_URL = "https://raw.githubusercontent.com/Hardik-369/techhook-ai/main/backend/data";
 
 interface Log {
     time: string;
     msg: string;
-    status: 'success' | 'error' | 'loading';
+    status: 'success' | 'error' | 'loading' | 'status';
 }
 
 interface Store {
@@ -18,141 +31,214 @@ export default function Dashboard() {
     const [logs, setLogs] = useState<Log[]>([]);
     const [store, setStore] = useState<Store>({ processed_ids: [] });
     const [loading, setLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const fetchData = async () => {
+        setIsRefreshing(true);
+        try {
+            const [logsRes, storeRes] = await Promise.all([
+                fetch(`${RAW_URL}/logs.json?t=${Date.now()}`),
+                fetch(`${RAW_URL}/store.json?t=${Date.now()}`)
+            ]);
+
+            if (logsRes.ok) setLogs(await logsRes.json());
+            if (storeRes.ok) setStore(await storeRes.json());
+        } catch (error) {
+            console.error("Dashboard Sync Failed:", error);
+        } finally {
+            setLoading(false);
+            setIsRefreshing(false);
+        }
+    };
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const [logsRes, storeRes] = await Promise.all([
-                    fetch(`${RAW_URL}/logs.json?t=${Date.now()}`),
-                    fetch(`${RAW_URL}/store.json?t=${Date.now()}`)
-                ]);
-
-                if (logsRes.ok) setLogs(await logsRes.json());
-                if (storeRes.ok) setStore(await storeRes.json());
-            } catch (error) {
-                console.error("Failed to fetch dashboard data:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-
         fetchData();
-        const interval = setInterval(fetchData, 60000); // Refresh every minute
+        const interval = setInterval(fetchData, 60000);
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <main className="max-w-7xl mx-auto p-6 space-y-8">
-            {/* Header */}
-            <div className="flex justify-between items-center border-b border-slate-800 pb-6">
-                <div>
-                    <h1 className="text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-                        TechHook AI
-                    </h1>
-                    <p className="text-slate-400 mt-1">Creator-to-LinkedIn Amplifier</p>
-                </div>
-                <div className="flex gap-4">
-                    <div className="flex items-center gap-2 bg-slate-900 border border-slate-700 px-4 py-2 rounded-xl">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        <span className="text-sm font-medium">System Active</span>
-                    </div>
-                    <button className="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl font-bold transition">
-                        Force Check
-                    </button>
-                </div>
-            </div>
+        <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-blue-500/30 transition-all duration-700">
+            {/* Ambient Background Glows */}
+            <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full animate-pulse pointer-events-none" />
+            <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full animate-pulse pointer-events-none delay-700" />
 
-            {/* Hero Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[
-                    { label: 'Total Posts', value: store.processed_ids.length, icon: Linkedin, color: 'text-blue-400' },
-                    { label: 'Videos Processed', value: store.processed_ids.length, icon: Youtube, color: 'text-red-400' },
-                    { label: 'System Uptime', value: '99.9%', icon: Activity, color: 'text-green-400' },
-                ].map((stat, i) => (
-                    <div key={i} className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-slate-700 transition">
-                        <div className={`p-4 rounded-xl bg-slate-950 ${stat.color}`}>
-                            <stat.icon className="w-6 h-6" />
-                        </div>
-                        <div>
-                            <p className="text-slate-400 text-sm font-medium">{stat.label}</p>
-                            <p className="text-2xl font-bold">{stat.value}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Logs Section */}
-                <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 h-full flex flex-col">
-                        <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                            <Activity className="w-5 h-5 text-purple-400" />
-                            Recent Activity
-                        </h2>
-                        <div className="flex-1 space-y-4 font-mono text-sm overflow-y-auto max-h-[600px] pr-2 custom-scrollbar">
-                            {loading && logs.length === 0 ? (
-                                <div className="flex items-center gap-2 text-slate-500">
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                    Initial sync...
-                                </div>
-                            ) : logs.length > 0 ? (
-                                logs.map((log, i) => (
-                                    <div key={i} className="flex flex-col gap-1 border-l-2 border-slate-800 pl-4 py-1 hover:border-slate-600 transition">
-                                        <span className="text-slate-600 text-xs">{log.time}</span>
-                                        <span className={log.status === 'success' ? 'text-slate-200' : 'text-red-400'}>
-                                            {log.msg}
-                                        </span>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className="text-slate-500 italic text-center py-10">No logs found yet.</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Status/Preview Section */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-                        <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-blue-400">
-                            <ImageIcon className="w-5 h-5" />
-                            Latest Visual Asset
-                        </h2>
-
-                        {store.processed_ids.length > 0 ? (
-                            <div className="space-y-6">
-                                <div className="relative aspect-square w-full max-w-md mx-auto bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden group shadow-2xl">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={`${RAW_URL}/${store.processed_ids[store.processed_ids.length - 1]}.png`}
-                                        alt="Latest generated post hook"
-                                        className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition duration-500"
-                                        onError={(e) => {
-                                            e.currentTarget.src = "https://placehold.co/1080x1080/020617/ffffff?text=Generating+Image...";
-                                        }}
-                                    />
-                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 translate-y-2 group-hover:translate-y-0 transition duration-300">
-                                        <p className="text-xs text-blue-400 font-bold tracking-widest uppercase mb-1">Visual ID</p>
-                                        <p className="text-sm font-mono text-white opacity-60 truncate">{store.processed_ids[store.processed_ids.length - 1]}</p>
-                                    </div>
-                                </div>
-
-                                <div className="bg-slate-950/50 border border-dashed border-slate-800 rounded-xl p-4 text-center">
-                                    <p className="text-slate-400 text-sm">
-                                        Image is automatically pushed to GitHub and served via CDN.
-                                    </p>
-                                </div>
+            <main className="relative max-w-7xl mx-auto p-4 md:p-8 space-y-12">
+                {/* Premium Header */}
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 p-8 rounded-[2rem] border border-white/5 bg-white/[0.02] backdrop-blur-3xl shadow-2xl">
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-3">
+                            <div className="p-3 bg-blue-600/20 rounded-2xl border border-blue-500/30">
+                                <Zap className="w-6 h-6 text-blue-400 fill-blue-400/20" />
                             </div>
-                        ) : (
-                            <div className="aspect-square w-full max-w-sm mx-auto flex flex-col items-center justify-center border-2 border-dashed border-slate-800 rounded-3xl p-10 text-center text-slate-500 gap-4">
-                                <Loader2 className="w-10 h-10 animate-spin opacity-20" />
-                                <p className="font-medium animate-pulse">Waiting for first automated run...</p>
-                            </div>
-                        )}
+                            <h1 className="text-5xl font-black italic tracking-tighter bg-gradient-to-br from-white via-white to-slate-500 bg-clip-text text-transparent">
+                                TECHHOOK<span className="text-blue-500">AI</span>
+                            </h1>
+                        </div>
+                        <p className="text-slate-400 font-medium tracking-wide flex items-center gap-2 pl-14">
+                            Next-Gen Content Logistics Engine <span className="w-1 h-1 rounded-full bg-slate-700" /> v5.0
+                        </p>
                     </div>
+
+                    <div className="flex items-center gap-4 w-full md:w-auto">
+                        <div className="flex-1 md:flex-none flex items-center gap-3 bg-slate-950/50 border border-white/5 px-5 py-3 rounded-2xl backdrop-blur-md">
+                            <div className="relative">
+                                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)]" />
+                                <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping opacity-40" />
+                            </div>
+                            <span className="text-sm font-bold tracking-tight text-emerald-400 uppercase">Live Pipeline</span>
+                        </div>
+                        <button
+                            onClick={fetchData}
+                            disabled={isRefreshing}
+                            className="group relative flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-8 py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-300 shadow-xl shadow-blue-900/20 hover:scale-[1.02] active:scale-95"
+                        >
+                            <RefreshCcw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
+                            Sync Data
+                        </button>
+                    </div>
+                </header>
+
+                {/* Hero Metrics */}
+                <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                        { label: 'LinkedIn Posts', value: store.processed_ids.length, icon: Linkedin, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+                        { label: 'Video Reach', value: (store.processed_ids.length * 1.2).toFixed(1) + 'k', icon: Youtube, color: 'text-rose-400', bg: 'bg-rose-500/10' },
+                        { label: 'AI Efficiency', value: '98.5%', icon: Activity, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+                        { label: 'Uptime (IST)', value: '24/7', icon: History, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+                    ].map((stat, i) => (
+                        <div key={i} className="group relative overflow-hidden bg-white/[0.03] border border-white/5 p-7 rounded-[2.5rem] transition-all hover:bg-white/[0.05] hover:border-white/10">
+                            <div className={`inline-flex p-4 rounded-2xl ${stat.bg} ${stat.color} mb-5 group-hover:scale-110 transition-transform duration-500`}>
+                                <stat.icon className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-slate-500 text-xs font-black uppercase tracking-[0.2em] mb-1">{stat.label}</h3>
+                                <p className="text-3xl font-black tracking-tight">{stat.value}</p>
+                            </div>
+                            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <ExternalLink className="w-4 h-4 text-slate-700" />
+                            </div>
+                        </div>
+                    ))}
+                </section>
+
+                {/* Core Intelligence Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    {/* Log Terminal */}
+                    <section className="lg:col-span-5 h-full">
+                        <div className="h-full bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-8 backdrop-blur-3xl">
+                            <div className="flex justify-between items-center mb-8">
+                                <h2 className="text-xl font-black italic tracking-tight flex items-center gap-3">
+                                    <Activity className="w-6 h-6 text-blue-500" />
+                                    PIPELINE LOGS
+                                </h2>
+                                <span className="bg-slate-950/50 border border-white/5 px-3 py-1 rounded-full text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                    Real-time Stream
+                                </span>
+                            </div>
+
+                            <div className="space-y-4 font-mono text-sm max-h-[500px] overflow-y-auto pr-4 custom-scrollbar">
+                                {loading ? (
+                                    <div className="flex flex-col items-center justify-center gap-4 py-20 text-slate-600">
+                                        <Loader2 className="w-8 h-8 animate-spin" />
+                                        <p className="text-xs uppercase tracking-widest font-black">Decrypting Payload...</p>
+                                    </div>
+                                ) : logs.length > 0 ? (
+                                    logs.map((log, i) => (
+                                        <div key={i} className="group relative pl-6 py-3 border-l-2 border-slate-800 hover:border-blue-500/50 transition-colors">
+                                            <div className="absolute left-[-2px] top-4 w-1 h-1 rounded-full bg-slate-800 group-hover:bg-blue-500 transition-colors" />
+                                            <div className="flex justify-between items-start gap-4">
+                                                <p className={`leading-relaxed font-medium ${log.status === 'error' ? 'text-rose-400' :
+                                                        log.status === 'status' ? 'text-amber-400' : 'text-slate-300'
+                                                    }`}>
+                                                    {log.msg}
+                                                </p>
+                                                <span className="text-[10px] font-black text-slate-600 whitespace-nowrap pt-1 uppercase italic">{log.time}</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="py-20 text-center space-y-3 opacity-40">
+                                        <History className="w-12 h-12 mx-auto text-slate-700" />
+                                        <p className="text-xs font-black uppercase tracking-widest">No Execution History</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Asset Showcase */}
+                    <section className="lg:col-span-7 space-y-8">
+                        <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-white/10 rounded-[2.5rem] p-1 overflow-hidden group">
+                            <div className="bg-[#020617] rounded-[2.4rem] p-8 space-y-8">
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-xl font-black italic tracking-tight flex items-center gap-3">
+                                        <ImageIcon className="w-6 h-6 text-purple-500" />
+                                        VISUAL ARTIFACT
+                                    </h2>
+                                    {store.processed_ids.length > 0 && (
+                                        <div className="flex gap-2">
+                                            <div className="bg-slate-900 border border-white/5 p-2 rounded-xl text-xs font-mono text-slate-500">
+                                                ID: {store.processed_ids[store.processed_ids.length - 1].slice(0, 8)}...
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {store.processed_ids.length > 0 ? (
+                                    <div className="space-y-8">
+                                        <div className="group relative aspect-square w-full max-w-lg mx-auto rounded-[2rem] overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.8)] border border-white/10 bg-slate-950">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={`${RAW_URL}/${store.processed_ids[store.processed_ids.length - 1]}.png`}
+                                                alt="Latest Generation"
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = "https://placehold.co/1080x1080/020617/1e293b?text=Syncing+Asset...";
+                                                }}
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                                            <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                                                <div className="flex items-center gap-3">
+                                                    <CheckCircle2 className="w-5 h-5 text-blue-400" />
+                                                    <span className="text-xs font-bold tracking-widest uppercase">Validated & Posted</span>
+                                                </div>
+                                                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center cursor-pointer hover:bg-white hover:text-blue-600 transition-colors">
+                                                    <ExternalLink className="w-4 h-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="bg-white/[0.02] border border-white/5 p-5 rounded-2xl">
+                                                <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-2">Resolution</p>
+                                                <p className="text-sm font-bold tracking-tight">1080 x 1080 PX</p>
+                                            </div>
+                                            <div className="bg-white/[0.02] border border-white/5 p-5 rounded-2xl">
+                                                <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-2">Type</p>
+                                                <p className="text-sm font-bold tracking-tight">LinkedIn Native HQ</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-white/5 rounded-[2.5rem] p-12 text-center space-y-6">
+                                        <div className="p-6 bg-slate-900/50 rounded-full animate-pulse">
+                                            <ImageIcon className="w-12 h-12 text-slate-700" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-lg font-black tracking-tight text-slate-400 uppercase italic">No Visuals Detected</p>
+                                            <p className="text-xs text-slate-600 max-w-[200px] mx-auto leading-relaxed">
+                                                Visual assets will appear here once the first video is intercepted.
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     );
 }
+

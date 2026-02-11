@@ -1,6 +1,7 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from pytube import YouTube
-import google.generativeai as genai
+import speech_recognition as sr
+from pydub import AudioSegment
 import os
 import time
 import re
@@ -15,15 +16,15 @@ def get_transcript(video_id):
         data = transcript.fetch()
         return clean_text(" ".join([t['text'] for t in data]))
     except Exception as e:
-        print(f"Primary API failed for {video_id}")
+        print(f"Method 1 (API) failed for {video_id}")
 
-    # Method 2: Manual Scraper
+    # Method 2: Manual Scraper (Custom "youtubetotranscript.com" style)
     try:
         data = scraper.scrape_transcript(video_id)
         if data:
             return clean_text(" ".join([t['text'] for t in data]))
     except Exception as e:
-        print(f"Manual scraper failed for {video_id}")
+        print(f"Method 2 (Scraper) failed for {video_id}")
 
     # Method 3: pytube caption extraction
     try:
@@ -33,22 +34,62 @@ def get_transcript(video_id):
         if caption:
             return clean_text(caption.generate_srt_captions())
     except Exception as e:
-        print(f"Pytube captions failed for {video_id}")
+        print(f"Method 3 (Pytube) failed for {video_id}")
+
+    # Method 4: Local Speech Recognition (The "Speech to Text" way)
+    try:
+        audio_path = get_audio_content(video_id)
+        if audio_path:
+            text = get_transcript_via_local_stt(audio_path)
+            # Cleanup
+            try: os.remove(audio_path)
+            except: pass
+            if text:
+                return clean_text(text)
+    except Exception as e:
+        print(f"Method 4 (SpeechRec) failed for {video_id}: {e}")
 
     return None
+
+def get_transcript_via_local_stt(audio_path):
+    """
+    Uses SpeechRecognition to extract text from an audio file.
+    Converts to wav first for compatibility.
+    """
+    try:
+        # Convert to WAV
+        print(f"Converting {audio_path} to WAV...")
+        wav_path = audio_path.replace(".mp3", ".wav")
+        audio = AudioSegment.from_file(audio_path)
+        audio.export(wav_path, format="wav")
+        
+        recognizer = sr.Recognizer()
+        with sr.AudioFile(wav_path) as source:
+            print("Reading audio file...")
+            audio_data = recognizer.record(source)
+            print("Performing Speech-to-Text...")
+            # Use Google's free Web Speech API
+            text = recognizer.recognize_google(audio_data)
+            
+        # Cleanup WAV
+        try: os.remove(wav_path)
+        except: pass
+        
+        return text
+    except Exception as e:
+        print(f"Local STT error: {e}")
+        return None
 
 def get_audio_content(video_id):
     """
     Downloads the audio of a video using pytube.
-    This can be used for Gemini Multimodal analysis (STT).
     """
     try:
         yt = YouTube(f"https://youtube.com/watch?v={video_id}")
         audio_stream = yt.streams.filter(only_audio=True).first()
-        out_file = audio_stream.download(output_path="backend/data", filename=f"{video_id}_audio")
-        # Rename to include proper extension
-        base, ext = os.path.splitext(out_file)
-        new_file = base + '.mp3'
+        # Save as mp3 initially
+        out_file = audio_stream.download(output_path="backend/data", filename=f"{video_id}_temp")
+        new_file = os.path.join("backend/data", f"{video_id}_audio.mp3")
         if os.path.exists(new_file): os.remove(new_file)
         os.rename(out_file, new_file)
         return new_file

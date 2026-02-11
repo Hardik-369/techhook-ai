@@ -9,56 +9,6 @@ load_dotenv()
 # Configure Gemini API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-def generate_from_audio(audio_path, video_title):
-    try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        
-        # 1. Upload the file to Gemini File API
-        print(f"Uploading {audio_path} to Gemini...")
-        audio_file = genai.upload_file(path=audio_path)
-        
-        # 2. Wait for processing (usually instant for audio)
-        while audio_file.state.name == "PROCESSING":
-            time.sleep(2)
-            audio_file = genai.get_file(audio_file.name)
-            
-        # 3. Generate post
-        prompt = f"""
-        You are an expert LinkedIn ghostwriter. 
-        I am providing the audio from a YouTube video titled: "{video_title}".
-        Listen to the audio and create a high-engagement LinkedIn post.
-        
-        GUIDELINES:
-        - Hook first line: Must be controversial or a pattern interrupt.
-        - Tone: Intelligent, founder-focused, high engagement.
-        - Image Hook: Extract a separate 6-7 word "Hook Statement" for an image overlay.
-        
-        FORMAT:
-        Return ONLY a JSON object with two keys:
-        "post_content": "The full LinkedIn post text"
-        "image_hook": "The 6-7 word hook statement"
-        """
-        
-        response = model.generate_content([prompt, audio_file])
-        
-        # Cleanup file from Gemini API (Optional but good practice)
-        # genai.delete_file(audio_file.name)
-        
-        # Robust JSON extraction
-        text = response.text
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "{" in text and "}" in text:
-            start = text.find("{")
-            end = text.rfind("}") + 1
-            text = text[start:end]
-            
-        return json.loads(text)
-        
-    except Exception as e:
-        print(f"Gemini Audio analysis failed: {e}")
-        return None
-
 def generate_linkedin_content(transcript=None, video_title=None, description=None):
     model = genai.GenerativeModel('gemini-1.5-flash')
     
