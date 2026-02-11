@@ -50,23 +50,33 @@ def run_pipeline():
         
     log_event(f"New video detected: {video['title']}")
     
-    # 2. Get transcript
+    # 2. Get transcript (3 Methods)
     log_event("Extracting transcript...")
     ts = transcript.get_transcript(video['id'])
     
     # 3. Generate LinkedIn Content
+    content = None
     if ts:
         log_event("Generating AI content from Transcript...")
         content = generator.generate_linkedin_content(transcript=ts)
     else:
-        log_event("No transcript found. Falling back to Title + Description...", "status")
-        content = generator.generate_linkedin_content(
-            video_title=video['title'], 
-            description=video['description']
-        )
+        log_event("No transcript found. Trying Multimodal STT (listening to audio)...", "status")
+        audio_path = transcript.get_audio_content(video['id'])
+        if audio_path:
+            content = generator.generate_from_audio(audio_path, video['title'])
+            # Clean up audio file
+            try: os.remove(audio_path)
+            except: pass
+            
+        if not content:
+            log_event("STT failed. Falling back to Title + Description...", "status")
+            content = generator.generate_linkedin_content(
+                video_title=video['title'], 
+                description=video['description']
+            )
         
     if not content:
-        log_event("AI generation failed.", "error")
+        log_event("All AI generation methods failed.", "error")
         return
         
     # 4. Generate Image
