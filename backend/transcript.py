@@ -1,30 +1,38 @@
 from youtube_transcript_api import YouTubeTranscriptApi
+from pytube import YouTube
 import re
 
 def get_transcript(video_id):
+    # Method 1: youtube-transcript-api (Fastest, uses API)
     try:
         api = YouTubeTranscriptApi()
         transcript_list = api.list(video_id)
-        
-        # 1. Try to find manually created English
-        # 2. Try to find generated English
-        # 3. Try to find any transcript and translate it
-        
         try:
-            # Find any English transcript
             transcript = transcript_list.find_transcript(['en', 'en-US', 'en-GB'])
         except:
-            # If no English, take the first available and translate to English
             first_transcript = next(iter(transcript_list))
             transcript = first_transcript.translate('en')
             
         data = transcript.fetch()
-        text = " ".join([t['text'] for t in data])
-        return clean_text(text)
-        
+        return clean_text(" ".join([t['text'] for t in data]))
     except Exception as e:
-        print(f"Error fetching transcript for {video_id}: {e}")
-        return None
+        print(f"Primary transcript API failed for {video_id}: {e}")
+
+    # Method 2: pytube (Scraping fallback)
+    try:
+        yt = YouTube(f"https://youtube.com/watch?v={video_id}")
+        # Try to find English captions
+        caption = yt.captions.get_by_language_code('en') or \
+                  yt.captions.get_by_language_code('a.en') or \
+                  next(iter(yt.captions.all()), None)
+        
+        if caption:
+            # Pytube returns XML, we need the text
+            return clean_text(caption.generate_srt_captions())
+    except Exception as e:
+        print(f"Secondary transcript (pytube) failed for {video_id}: {e}")
+
+    return None
 
 def clean_text(text):
     # Remove filler words and clean whitespace
