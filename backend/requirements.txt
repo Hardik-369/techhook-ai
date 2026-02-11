@@ -1,0 +1,6 @@
+feedparser
+youtube-transcript-api
+google-generativeai
+pillow
+playwright
+python-dotenv
