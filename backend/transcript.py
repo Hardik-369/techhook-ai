@@ -3,8 +3,16 @@ import re
 
 def get_transcript(video_id):
     try:
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
-        text = " ".join([t['text'] for t in transcript_list])
+        # Create an instance to call fetch
+        api = YouTubeTranscriptApi()
+        # Try to fetch in English (including auto-generated)
+        transcript_list = api.list(video_id)
+        
+        # Look for English (en) or variations like en-US
+        transcript = transcript_list.find_transcript(['en', 'en-US', 'en-GB'])
+        data = transcript.fetch()
+        
+        text = " ".join([t['text'] for t in data])
         return clean_text(text)
     except Exception as e:
         print(f"Error fetching transcript for {video_id}: {e}")
