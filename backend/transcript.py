@@ -1,6 +1,7 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from pytube import YouTube
 import re
+import scraper
 
 def get_transcript(video_id):
     # Method 1: youtube-transcript-api (Fastest, uses API)
@@ -18,7 +19,15 @@ def get_transcript(video_id):
     except Exception as e:
         print(f"Primary transcript API failed for {video_id}: {e}")
 
-    # Method 2: pytube (Scraping fallback)
+    # Method 2: Manual Scraper (The "youtubetotranscript.com" way)
+    try:
+        data = scraper.scrape_transcript(video_id)
+        if data:
+            return clean_text(" ".join([t['text'] for t in data]))
+    except Exception as e:
+        print(f"Manual scraper failed for {video_id}: {e}")
+
+    # Method 3: pytube (Scraping fallback)
     try:
         yt = YouTube(f"https://youtube.com/watch?v={video_id}")
         # Try to find English captions
@@ -27,7 +36,6 @@ def get_transcript(video_id):
                   next(iter(yt.captions.all()), None)
         
         if caption:
-            # Pytube returns XML, we need the text
             return clean_text(caption.generate_srt_captions())
     except Exception as e:
         print(f"Secondary transcript (pytube) failed for {video_id}: {e}")
