@@ -10,7 +10,8 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 def generate_linkedin_content(transcript=None, video_title=None, description=None):
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # Use gemini-flash-latest for stable performance and quota
+    model = genai.GenerativeModel('gemini-flash-latest')
     
     # Build source material based on what's available
     source_material = ""
@@ -48,11 +49,17 @@ def generate_linkedin_content(transcript=None, video_title=None, description=Non
             return None
         
         # Robust JSON extraction
-        text = response.text
+        text = response.text.strip()
+        print(f"AI Response received. Length: {len(text)}")
+        
+        # Remove markdown code blocks if present
         if "```json" in text:
             text = text.split("```json")[1].split("```")[0].strip()
-        elif "{" in text and "}" in text:
-            # Try to find the first { and last }
+        elif "```" in text:
+            text = text.split("```")[1].split("```")[0].strip()
+        
+        # Ensure we only have the JSON object
+        if "{" in text and "}" in text:
             start = text.find("{")
             end = text.rfind("}") + 1
             text = text[start:end]
@@ -68,8 +75,8 @@ def generate_linkedin_content(transcript=None, video_title=None, description=Non
             
     except Exception as e:
         print(f"Error generating LinkedIn content: {e}")
-        if 'response' in locals():
-            print(f"Raw Response: {response.text[:500]}")
+        if 'response' in locals() and hasattr(response, 'text'):
+            print(f"Raw Response snippet: {response.text[:200]}...")
         return None
 
 if __name__ == "__main__":
