@@ -1,5 +1,15 @@
 [
     {
+        "time": "12:50 AM",
+        "msg": "No videos found in feed.",
+        "status": "error"
+    },
+    {
+        "time": "12:50 AM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "12:46 AM",
         "msg": "Could not fetch transcript. Skipping.",
         "status": "error"
