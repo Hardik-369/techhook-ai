@@ -11,12 +11,14 @@ import generator
 import image_gen
 import poster
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 LOG_PATH = os.path.join(os.path.dirname(__file__), "backend", "data", "logs.json")
 
 def log_event(message, status="success"):
-    timestamp = datetime.now().strftime("%I:%M %p")
+    # GitHub Actions run in UTC. Convert to IST (UTC+5:30)
+    ist = timezone(timedelta(hours=5, minutes=30))
+    timestamp = datetime.now(ist).strftime("%I:%M %p")
     log_entry = {"time": timestamp, "msg": message, "status": status}
     
     logs = []
