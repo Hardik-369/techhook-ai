@@ -9,14 +9,19 @@ load_dotenv()
 # Configure Gemini API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-def generate_linkedin_content(transcript):
+def generate_linkedin_content(transcript=None, video_title=None, description=None):
     model = genai.GenerativeModel('gemini-1.5-flash')
     
+    # Build source material based on what's available
+    if transcript:
+        source_material = f"TRANSCRIPT:\n{transcript}"
+    else:
+        source_material = f"VIDEO TITLE: {video_title}\n\nVIDEO DESCRIPTION:\n{description}"
+
     prompt = f"""
-    Transform the following YouTube video transcript into a high-engagement LinkedIn post.
+    Transform the following YouTube video content into a high-engagement LinkedIn post.
     
-    TRANSCRIPT:
-    {transcript}
+    {source_material}
     
     GUIDELINES:
     1. Hook first line: Must be controversial or deeply curious.
@@ -34,7 +39,6 @@ def generate_linkedin_content(transcript):
     
     try:
         response = model.generate_content(prompt)
-        # Handle potential safety filters or empty responses
         if not response.text:
             return None
         

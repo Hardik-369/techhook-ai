@@ -53,13 +53,18 @@ def run_pipeline():
     # 2. Get transcript
     log_event("Extracting transcript...")
     ts = transcript.get_transcript(video['id'])
-    if not ts:
-        log_event("Could not fetch transcript. Skipping.", "error")
-        return
-        
+    
     # 3. Generate LinkedIn Content
-    log_event("Generating AI content with Gemini...")
-    content = generator.generate_linkedin_content(ts)
+    if ts:
+        log_event("Generating AI content from Transcript...")
+        content = generator.generate_linkedin_content(transcript=ts)
+    else:
+        log_event("No transcript found. Falling back to Title + Description...", "status")
+        content = generator.generate_linkedin_content(
+            video_title=video['title'], 
+            description=video['description']
+        )
+        
     if not content:
         log_event("AI generation failed.", "error")
         return
