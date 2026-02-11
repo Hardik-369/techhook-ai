@@ -72,8 +72,8 @@ def post_to_linkedin(post_content, image_path, session_path="backend/data/sessio
             # Random delay before final post
             time.sleep(random.randint(2, 5))
             
-            # page.click("button.share-actions__primary-action:has-text('Post')")
-            print("Post button clicked (simulated for now).")
+            page.click("button.share-actions__primary-action:has-text('Post')")
+            print("Post button clicked! Live post published.")
             
             # Save storage state for next time
             os.makedirs(os.path.dirname(session_path), exist_ok=True)
