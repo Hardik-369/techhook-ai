@@ -2,7 +2,7 @@ import feedparser
 import json
 import os
 
-FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=UCsQoiOrh7jzKmE8NBofhTnQ"
+FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=UCvX6nS2IqPlo_X7M8d8iOsw"
 STORE_PATH = os.path.join(os.path.dirname(__file__), "data", "store.json")
 
 def get_latest_video():
