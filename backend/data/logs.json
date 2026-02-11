@@ -1,5 +1,35 @@
 [
     {
+        "time": "01:14 AM",
+        "msg": "All AI generation methods failed.",
+        "status": "error"
+    },
+    {
+        "time": "01:14 AM",
+        "msg": "STT failed. Falling back to Title + Description...",
+        "status": "status"
+    },
+    {
+        "time": "01:14 AM",
+        "msg": "No transcript found. Trying Multimodal STT (listening to audio)...",
+        "status": "status"
+    },
+    {
+        "time": "01:14 AM",
+        "msg": "Extracting transcript...",
+        "status": "success"
+    },
+    {
+        "time": "01:14 AM",
+        "msg": "New video detected: I Gave Seedance 2.0 One Photo and It Made Me Talk Like a YouTuber!",
+        "status": "success"
+    },
+    {
+        "time": "01:14 AM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "01:10 AM",
         "msg": "AI generation failed.",
         "status": "error"
@@ -67,36 +97,6 @@
     {
         "time": "01:03 AM",
         "msg": "New video detected: I Gave Seedance 2.0 One Photo and It Made Me Talk Like a YouTuber!",
-        "status": "success"
-    },
-    {
-        "time": "01:03 AM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "12:59 AM",
-        "msg": "AI generation failed.",
-        "status": "error"
-    },
-    {
-        "time": "12:59 AM",
-        "msg": "No transcript found. Falling back to Title + Description...",
-        "status": "status"
-    },
-    {
-        "time": "12:59 AM",
-        "msg": "Extracting transcript...",
-        "status": "success"
-    },
-    {
-        "time": "12:59 AM",
-        "msg": "New video detected: I Gave Seedance 2.0 One Photo and It Made Me Talk Like a YouTuber!",
-        "status": "success"
-    },
-    {
-        "time": "12:59 AM",
-        "msg": "Checking RSS Feed...",
         "status": "success"
     }
 ]
