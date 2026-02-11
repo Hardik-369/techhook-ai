@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def post_to_linkedin(post_content, image_path, session_path="data/session.json"):
+def post_to_linkedin(post_content, image_path, session_path="backend/data/session.json"):
     """
     Posts content to LinkedIn using Playwright.
     Note: Requires a valid session.json or manual login first.

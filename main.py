@@ -1,10 +1,15 @@
+import os
+import sys
+import time
+
+# Add backend to path so we can import modules
+sys.path.append(os.path.join(os.path.dirname(__file__), "backend"))
+
 import monitor
 import transcript
 import generator
 import image_gen
 import poster
-import os
-import time
 
 def run_pipeline():
     print("Starting TechHook AI Pipeline...")
