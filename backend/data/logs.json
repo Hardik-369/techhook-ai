@@ -1,5 +1,30 @@
 [
     {
+        "time": "01:10 AM",
+        "msg": "AI generation failed.",
+        "status": "error"
+    },
+    {
+        "time": "01:10 AM",
+        "msg": "No transcript found. Falling back to Title + Description...",
+        "status": "status"
+    },
+    {
+        "time": "01:10 AM",
+        "msg": "Extracting transcript...",
+        "status": "success"
+    },
+    {
+        "time": "01:10 AM",
+        "msg": "New video detected: I Gave Seedance 2.0 One Photo and It Made Me Talk Like a YouTuber!",
+        "status": "success"
+    },
+    {
+        "time": "01:10 AM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "01:07 AM",
         "msg": "AI generation failed.",
         "status": "error"
@@ -73,30 +98,5 @@
         "time": "12:59 AM",
         "msg": "Checking RSS Feed...",
         "status": "success"
-    },
-    {
-        "time": "12:54 AM",
-        "msg": "Could not fetch transcript. Skipping.",
-        "status": "error"
-    },
-    {
-        "time": "12:54 AM",
-        "msg": "Extracting transcript...",
-        "status": "success"
-    },
-    {
-        "time": "12:54 AM",
-        "msg": "New video detected: I Gave Seedance 2.0 One Photo and It Made Me Talk Like a YouTuber!",
-        "status": "success"
-    },
-    {
-        "time": "12:54 AM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "12:50 AM",
-        "msg": "No videos found in feed.",
-        "status": "error"
     }
 ]
