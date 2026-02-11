@@ -12,8 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
     "autoprefixer": "^10.4.24",
     "lucide-react": "^0.563.0",
     "next": "^16.1.6",
