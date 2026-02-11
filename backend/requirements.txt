@@ -4,6 +4,6 @@ google-generativeai
 pillow
 playwright
 python-dotenv
-pytube
+yt-dlp
 SpeechRecognition
 pydub

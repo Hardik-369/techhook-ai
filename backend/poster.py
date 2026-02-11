@@ -37,7 +37,22 @@ def post_to_linkedin(post_content, image_path, session_path="backend/data/sessio
                     page.fill("input#username", email)
                     page.fill("input#password", password)
                     page.click("button[type='submit']")
-                    page.wait_for_url("**/feed/")
+                    
+                    try:
+                        # Increase timeout to 60s and wait for network to settle
+                        page.wait_for_url("**/feed/", timeout=60000, wait_until="networkidle")
+                    except Exception as e:
+                        print(f"Login navigation failed or challenged: {e}")
+                        # Take diagnostic screenshot
+                        shot_path = "backend/data/login_error.png"
+                        page.screenshot(path=shot_path)
+                        print(f"Diagnostic screenshot saved to {shot_path}")
+                        
+                        if "challenge" in page.url:
+                            print("CRITICAL: LinkedIn triggered a security challenge (CAPTCHA/OTP). Manual intervention required.")
+                        
+                        browser.close()
+                        return False
                 else:
                     print("Not logged in and no credentials found in .env. Manual login required.")
                     browser.close()

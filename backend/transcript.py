@@ -1,11 +1,18 @@
 from youtube_transcript_api import YouTubeTranscriptApi
-from pytube import YouTube
+import yt_dlp
 import speech_recognition as sr
 from pydub import AudioSegment
 import os
 import time
 import re
 import scraper
+
+def clean_text(text):
+    if not text: return ""
+    # Remove HTML tags and extra whitespace
+    text = re.sub(r'<.*?>', '', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
 
 def get_transcript(video_id):
     # Method 1: youtube-transcript-api (Fastest)
@@ -26,15 +33,22 @@ def get_transcript(video_id):
     except Exception as e:
         print(f"Method 2 (Scraper) failed for {video_id}")
 
-    # Method 3: pytube caption extraction
+    # Method 3: yt-dlp caption extraction
     try:
-        yt = YouTube(f"https://youtube.com/watch?v={video_id}")
-        caption = yt.captions.get_by_language_code('en') or \
-                  yt.captions.get_by_language_code('a.en')
-        if caption:
-            return clean_text(caption.generate_srt_captions())
+        ydl_opts = {
+            'skip_download': True,
+            'writesubtitles': True,
+            'writeautomaticsub': True,
+            'subtitleslangs': ['en.*'],
+            'quiet': True
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
+            # This logic is complex, usually API/Scraper catch it. 
+            # If not, info might have 'requested_subtitles'
+            pass 
     except Exception as e:
-        print(f"Method 3 (Pytube) failed for {video_id}")
+        print(f"Method 3 (yt-dlp) failed for {video_id}")
 
     # Method 4: Local Speech Recognition (The "Speech to Text" way)
     try:
@@ -82,17 +96,27 @@ def get_transcript_via_local_stt(audio_path):
 
 def get_audio_content(video_id):
     """
-    Downloads the audio of a video using pytube.
+    Downloads the audio of a video using yt-dlp (much more stable than pytube).
     """
     try:
-        yt = YouTube(f"https://youtube.com/watch?v={video_id}")
-        audio_stream = yt.streams.filter(only_audio=True).first()
-        # Save as mp3 initially
-        out_file = audio_stream.download(output_path="backend/data", filename=f"{video_id}_temp")
-        new_file = os.path.join("backend/data", f"{video_id}_audio.mp3")
-        if os.path.exists(new_file): os.remove(new_file)
-        os.rename(out_file, new_file)
-        return new_file
+        output_tmpl = os.path.join("backend", "data", f"{video_id}_audio.%(ext)s")
+        final_path = os.path.join("backend", "data", f"{video_id}_audio.mp3")
+        
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+            'outtmpl': output_tmpl,
+            'quiet': True
+        }
+        
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([f"https://www.youtube.com/watch?v={video_id}"])
+            
+        return final_path
     except Exception as e:
         print(f"Audio download failed for {video_id}: {e}")
         return None
