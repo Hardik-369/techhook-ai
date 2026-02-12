@@ -1,5 +1,15 @@
 [
     {
+        "time": "01:09 PM",
+        "msg": "No videos found in feed.",
+        "status": "error"
+    },
+    {
+        "time": "01:09 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "12:14 PM",
         "msg": "No videos found in feed.",
         "status": "error"
@@ -87,16 +97,6 @@
     {
         "time": "07:39 AM",
         "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "05:31 AM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "05:30 AM",
-        "msg": "Posting to LinkedIn via Playwright...",
         "status": "success"
     }
 ]
