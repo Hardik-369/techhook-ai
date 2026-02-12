@@ -1,5 +1,40 @@
 [
     {
+        "time": "09:35 PM",
+        "msg": "Posting failed.",
+        "status": "error"
+    },
+    {
+        "time": "09:34 PM",
+        "msg": "Posting to LinkedIn via Playwright...",
+        "status": "success"
+    },
+    {
+        "time": "09:34 PM",
+        "msg": "Generating hook image with Pillow...",
+        "status": "success"
+    },
+    {
+        "time": "09:34 PM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "09:34 PM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "09:34 PM",
+        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
+        "status": "success"
+    },
+    {
+        "time": "09:34 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "08:36 PM",
         "msg": "Posting failed.",
         "status": "error"
@@ -62,41 +97,6 @@
     {
         "time": "07:41 PM",
         "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
-        "status": "success"
-    },
-    {
-        "time": "07:41 PM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "06:31 PM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "06:30 PM",
-        "msg": "Posting to LinkedIn via Playwright...",
-        "status": "success"
-    },
-    {
-        "time": "06:30 PM",
-        "msg": "Generating hook image with Pillow...",
-        "status": "success"
-    },
-    {
-        "time": "06:30 PM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
-    },
-    {
-        "time": "06:30 PM",
-        "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "06:30 PM",
-        "msg": "New video detected: I Gave Seedance 2.0 One Photo and It Made Me Talk Like a YouTuber!",
         "status": "success"
     }
 ]
