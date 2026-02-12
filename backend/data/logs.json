@@ -1,5 +1,40 @@
 [
     {
+        "time": "01:51 AM",
+        "msg": "Posting failed.",
+        "status": "error"
+    },
+    {
+        "time": "01:50 AM",
+        "msg": "Posting to LinkedIn via Playwright...",
+        "status": "success"
+    },
+    {
+        "time": "01:50 AM",
+        "msg": "Generating hook image with Pillow...",
+        "status": "success"
+    },
+    {
+        "time": "01:50 AM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "01:50 AM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "01:50 AM",
+        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
+        "status": "success"
+    },
+    {
+        "time": "01:50 AM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "01:25 AM",
         "msg": "Posting failed.",
         "status": "error"
@@ -61,41 +96,6 @@
     },
     {
         "time": "12:46 AM",
-        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
-        "status": "success"
-    },
-    {
-        "time": "12:46 AM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "11:36 PM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "11:35 PM",
-        "msg": "Posting to LinkedIn via Playwright...",
-        "status": "success"
-    },
-    {
-        "time": "11:35 PM",
-        "msg": "Generating hook image with Pillow...",
-        "status": "success"
-    },
-    {
-        "time": "11:35 PM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
-    },
-    {
-        "time": "11:35 PM",
-        "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "11:35 PM",
         "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
         "status": "success"
     }
