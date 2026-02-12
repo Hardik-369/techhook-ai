@@ -1,5 +1,15 @@
 [
     {
+        "time": "12:14 PM",
+        "msg": "No videos found in feed.",
+        "status": "error"
+    },
+    {
+        "time": "12:14 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "11:18 AM",
         "msg": "No videos found in feed.",
         "status": "error"
@@ -88,15 +98,5 @@
         "time": "05:30 AM",
         "msg": "Posting to LinkedIn via Playwright...",
         "status": "success"
-    },
-    {
-        "time": "05:30 AM",
-        "msg": "Generating hook image with Pillow...",
-        "status": "success"
-    },
-    {
-        "time": "05:30 AM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
     }
 ]
