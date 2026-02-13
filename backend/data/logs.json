@@ -1,5 +1,40 @@
 [
     {
+        "time": "04:31 PM",
+        "msg": "Posting failed.",
+        "status": "error"
+    },
+    {
+        "time": "04:30 PM",
+        "msg": "Posting to LinkedIn via Playwright...",
+        "status": "success"
+    },
+    {
+        "time": "04:30 PM",
+        "msg": "Generating hook image with Pillow...",
+        "status": "success"
+    },
+    {
+        "time": "04:30 PM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "04:30 PM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "04:30 PM",
+        "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
+        "status": "success"
+    },
+    {
+        "time": "04:30 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "03:42 PM",
         "msg": "Posting failed.",
         "status": "error"
@@ -61,41 +96,6 @@
     },
     {
         "time": "03:05 PM",
-        "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
-        "status": "success"
-    },
-    {
-        "time": "03:05 PM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "02:28 PM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "02:27 PM",
-        "msg": "Posting to LinkedIn via Playwright...",
-        "status": "success"
-    },
-    {
-        "time": "02:27 PM",
-        "msg": "Generating hook image with Pillow...",
-        "status": "success"
-    },
-    {
-        "time": "02:27 PM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
-    },
-    {
-        "time": "02:27 PM",
-        "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "02:27 PM",
         "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
         "status": "success"
     }
