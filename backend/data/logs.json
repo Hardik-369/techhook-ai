@@ -1,5 +1,30 @@
 [
     {
+        "time": "10:04 AM",
+        "msg": "All AI generation methods failed.",
+        "status": "error"
+    },
+    {
+        "time": "10:04 AM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "10:04 AM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "10:04 AM",
+        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
+        "status": "success"
+    },
+    {
+        "time": "10:04 AM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "08:05 AM",
         "msg": "Posting failed.",
         "status": "error"
@@ -72,31 +97,6 @@
     {
         "time": "05:15 AM",
         "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "05:15 AM",
-        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
-        "status": "success"
-    },
-    {
-        "time": "05:15 AM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "04:46 AM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "04:45 AM",
-        "msg": "Posting to LinkedIn via Playwright...",
-        "status": "success"
-    },
-    {
-        "time": "04:45 AM",
-        "msg": "Generating hook image with Pillow...",
         "status": "success"
     }
 ]
