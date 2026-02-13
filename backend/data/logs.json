@@ -1,5 +1,15 @@
 [
     {
+        "time": "12:10 PM",
+        "msg": "No videos found in feed.",
+        "status": "error"
+    },
+    {
+        "time": "12:10 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "11:16 AM",
         "msg": "Posting failed.",
         "status": "error"
@@ -88,15 +98,5 @@
         "time": "08:04 AM",
         "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
         "status": "success"
-    },
-    {
-        "time": "08:04 AM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "05:31 AM",
-        "msg": "All AI generation methods failed.",
-        "status": "error"
     }
 ]
