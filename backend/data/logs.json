@@ -1,5 +1,40 @@
 [
     {
+        "time": "02:28 PM",
+        "msg": "Posting failed.",
+        "status": "error"
+    },
+    {
+        "time": "02:27 PM",
+        "msg": "Posting to LinkedIn via Playwright...",
+        "status": "success"
+    },
+    {
+        "time": "02:27 PM",
+        "msg": "Generating hook image with Pillow...",
+        "status": "success"
+    },
+    {
+        "time": "02:27 PM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "02:27 PM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "02:27 PM",
+        "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
+        "status": "success"
+    },
+    {
+        "time": "02:27 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "01:38 PM",
         "msg": "Posting failed.",
         "status": "error"
@@ -63,40 +98,5 @@
         "time": "11:15 AM",
         "msg": "Posting to LinkedIn via Playwright...",
         "status": "success"
-    },
-    {
-        "time": "11:15 AM",
-        "msg": "Generating hook image with Pillow...",
-        "status": "success"
-    },
-    {
-        "time": "11:15 AM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
-    },
-    {
-        "time": "11:15 AM",
-        "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "11:15 AM",
-        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
-        "status": "success"
-    },
-    {
-        "time": "11:15 AM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "10:04 AM",
-        "msg": "All AI generation methods failed.",
-        "status": "error"
-    },
-    {
-        "time": "10:04 AM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
     }
 ]
