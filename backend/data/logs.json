@@ -1,5 +1,40 @@
 [
     {
+        "time": "07:58 PM",
+        "msg": "Posting failed.",
+        "status": "error"
+    },
+    {
+        "time": "07:57 PM",
+        "msg": "Posting to LinkedIn via Playwright...",
+        "status": "success"
+    },
+    {
+        "time": "07:57 PM",
+        "msg": "Generating hook image with Pillow...",
+        "status": "success"
+    },
+    {
+        "time": "07:57 PM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "07:57 PM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "07:57 PM",
+        "msg": "New video detected: Warp Just Launched Oz, Which Lets You Run Unlimited AI Agents in the Cloud.",
+        "status": "success"
+    },
+    {
+        "time": "07:57 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "07:12 PM",
         "msg": "Posting failed.",
         "status": "error"
@@ -61,41 +96,6 @@
     },
     {
         "time": "05:57 PM",
-        "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
-        "status": "success"
-    },
-    {
-        "time": "05:57 PM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "05:26 PM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "05:25 PM",
-        "msg": "Posting to LinkedIn via Playwright...",
-        "status": "success"
-    },
-    {
-        "time": "05:25 PM",
-        "msg": "Generating hook image with Pillow...",
-        "status": "success"
-    },
-    {
-        "time": "05:25 PM",
-        "msg": "No audio/text data found. Using Title + Description fallback...",
-        "status": "status"
-    },
-    {
-        "time": "05:25 PM",
-        "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "05:25 PM",
         "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
         "status": "success"
     }
