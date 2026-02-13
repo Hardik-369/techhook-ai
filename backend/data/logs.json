@@ -1,5 +1,15 @@
 [
     {
+        "time": "01:06 PM",
+        "msg": "No videos found in feed.",
+        "status": "error"
+    },
+    {
+        "time": "01:06 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "12:10 PM",
         "msg": "No videos found in feed.",
         "status": "error"
@@ -88,15 +98,5 @@
         "time": "08:04 AM",
         "msg": "No audio/text data found. Using Title + Description fallback...",
         "status": "status"
-    },
-    {
-        "time": "08:04 AM",
-        "msg": "Extracting transcript (Deep Scan)...",
-        "status": "success"
-    },
-    {
-        "time": "08:04 AM",
-        "msg": "New video detected: Creating Anime is Now Easier Than Ever with Seedance 2.0!",
-        "status": "success"
     }
 ]
