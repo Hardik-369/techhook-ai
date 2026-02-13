@@ -1,5 +1,40 @@
 [
     {
+        "time": "03:06 PM",
+        "msg": "Posting failed.",
+        "status": "error"
+    },
+    {
+        "time": "03:05 PM",
+        "msg": "Posting to LinkedIn via Playwright...",
+        "status": "success"
+    },
+    {
+        "time": "03:05 PM",
+        "msg": "Generating hook image with Pillow...",
+        "status": "success"
+    },
+    {
+        "time": "03:05 PM",
+        "msg": "No audio/text data found. Using Title + Description fallback...",
+        "status": "status"
+    },
+    {
+        "time": "03:05 PM",
+        "msg": "Extracting transcript (Deep Scan)...",
+        "status": "success"
+    },
+    {
+        "time": "03:05 PM",
+        "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
+        "status": "success"
+    },
+    {
+        "time": "03:05 PM",
+        "msg": "Checking RSS Feed...",
+        "status": "success"
+    },
+    {
         "time": "02:28 PM",
         "msg": "Posting failed.",
         "status": "error"
@@ -62,41 +97,6 @@
     {
         "time": "01:36 PM",
         "msg": "New video detected: This Fake AI Video Got More Views Than the Original!",
-        "status": "success"
-    },
-    {
-        "time": "01:36 PM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "01:06 PM",
-        "msg": "No videos found in feed.",
-        "status": "error"
-    },
-    {
-        "time": "01:06 PM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "12:10 PM",
-        "msg": "No videos found in feed.",
-        "status": "error"
-    },
-    {
-        "time": "12:10 PM",
-        "msg": "Checking RSS Feed...",
-        "status": "success"
-    },
-    {
-        "time": "11:16 AM",
-        "msg": "Posting failed.",
-        "status": "error"
-    },
-    {
-        "time": "11:15 AM",
-        "msg": "Posting to LinkedIn via Playwright...",
         "status": "success"
     }
 ]
